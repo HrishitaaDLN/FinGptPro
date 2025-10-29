@@ -7,6 +7,9 @@ from textblob import TextBlob
 import re
 
 
+# ==============================
+# 🔹 Embedding Encoder
+# ==============================
 @lru_cache(maxsize=1)
 def get_encoder():
     model = SentenceTransformer(EMBED_MODEL, device=DEVICE)
@@ -14,19 +17,20 @@ def get_encoder():
     return model
 
 
+# ==============================
+# 🔹 Label Normalization Helper
+# ==============================
 def _normalize_label(lbl: str) -> str:
-    """Map any noisy label to {positive, negative, neutral}."""
+    """Map noisy or inconsistent labels to {positive, negative, neutral}."""
     if not lbl:
         return "neutral"
-    s = re.sub(r"[^a-z]", "", str(lbl).lower())  # keep letters only
-    # handle duplicates/typos like 'positveitive', 'neutraltral'
+    s = re.sub(r"[^a-z]", "", str(lbl).lower())
     if s.startswith("pos"):
         return "positive"
     if s.startswith("neg"):
         return "negative"
     if s.startswith("neu"):
         return "neutral"
-    # last fallback: polarity word inside
     if "posit" in s:
         return "positive"
     if "negat" in s:
@@ -36,29 +40,53 @@ def _normalize_label(lbl: str) -> str:
     return "neutral"
 
 
+# ==============================
+# 🔹 Retriever Class
+# ==============================
 class Retriever:
     def __init__(self):
-        self.client = QdrantClient(host=QDRANT_HOST, port=QDRANT_PORT)
+        # ✅ Qdrant Cloud connection (secure via .env or Streamlit secrets)
+        self.client = QdrantClient(
+            url=QDRANT_URL,
+            api_key=QDRANT_API_KEY,
+        )
         self.model = get_encoder()
         self.collection = COLLECTION_NAME
         self._init_collection()
 
+    # --------------------------
+    # 🗂️ Ensure collection exists
+    # --------------------------
     def _init_collection(self):
         """Ensure collection exists with correct vector size."""
         vector_size = self.model.get_sentence_embedding_dimension()
-        collections = [c.name for c in self.client.get_collections().collections]
+        try:
+            collections = [c.name for c in self.client.get_collections().collections]
+        except Exception as e:
+            print(f"⚠️ Could not fetch collections: {e}")
+            collections = []
+
         if self.collection not in collections:
+            print(f"📁 Creating new collection: {self.collection}")
             self.client.recreate_collection(
                 collection_name=self.collection,
-                vectors_config=models.VectorParams(size=vector_size, distance=models.Distance.COSINE),
+                vectors_config=models.VectorParams(
+                    size=vector_size,
+                    distance=models.Distance.COSINE,
+                ),
             )
+        else:
+            print(f"✅ Collection '{self.collection}' already exists")
 
+    # --------------------------
+    # 🔄 Force clean collection
+    # --------------------------
     def _recreate_collection_hard(self):
         """Always start from a clean slate before indexing."""
         vector_size = self.model.get_sentence_embedding_dimension()
-        # delete if exists; then recreate
         try:
             self.client.delete_collection(self.collection)
+            print(f"🧹 Old collection '{self.collection}' deleted.")
         except Exception:
             pass
         self.client.recreate_collection(
@@ -66,13 +94,14 @@ class Retriever:
             vectors_config=models.VectorParams(size=vector_size, distance=models.Distance.COSINE),
         )
 
+    # --------------------------
+    # ⚡ Build index
+    # --------------------------
     def build_index(self, data_path=DATA_PATH):
         """
         Rebuild index from dataset.
-        - Wipes the collection (hard recreate)
         - Detects column layout (PhraseBank: 'sentence'=label, 'label'=text)
         - Normalizes labels before upload
-        - Verifies distribution post-upload
         """
         print(f"📂 Loading dataset from: {data_path}")
         df = pd.read_csv(data_path)
@@ -84,7 +113,7 @@ class Retriever:
             raw_labels = df["sentence"].astype(str).tolist()
             sentences = df["label"].astype(str).tolist()
         else:
-            # generic fallback
+            # fallback: guess columns
             sentence_col = next((c for c in df.columns if "sentence" in c or "text" in c), None)
             if not sentence_col:
                 raise ValueError("❌ No sentence/text column found.")
@@ -92,20 +121,17 @@ class Retriever:
             if label_col:
                 raw_labels = df[label_col].astype(str).tolist()
             else:
-                # derive via TextBlob if totally missing
                 print("⚠️ No sentiment column found — auto-labeling with TextBlob.")
                 raw_labels = [self.auto_sentiment(t) for t in df[sentence_col].astype(str).tolist()]
             sentences = df[sentence_col].astype(str).tolist()
 
-        # Normalize labels
+        # Normalize and inspect
         sentiments = [_normalize_label(l) for l in raw_labels]
-
-        # Show pre-upload distribution
         pre_counts = pd.Series(sentiments).value_counts()
         print("📊 (pre-upload) sentiment distribution:")
         print(pre_counts)
 
-        # === Hard recreate so NO stale junk remains ===
+        # Reset collection
         self._recreate_collection_hard()
 
         # Embeddings
@@ -120,7 +146,7 @@ class Retriever:
 
         payload = [{"sentence": s, "sentiment": sentiments[i]} for i, s in enumerate(sentences)]
 
-        print(f"🚀 Uploading {len(sentences)} sentences to Qdrant...")
+        print(f"🚀 Uploading {len(sentences)} sentences to Qdrant Cloud...")
         self.client.upload_collection(
             collection_name=self.collection,
             vectors=embeddings,
@@ -128,13 +154,14 @@ class Retriever:
         )
         print("✅ Upload done.")
 
-        # Verify post-upload (scroll few and unique labels)
-        items, _ = self.client.scroll(collection_name=self.collection, limit=200)
+        # Verify
+        items, _ = self.client.scroll(collection_name=self.collection, limit=100)
         uniq = sorted({(it.payload.get("sentiment") or "NA") for it in items})
         print("🔎 (post-upload) unique labels found:", uniq)
-        if not set(uniq).issubset({"positive", "negative", "neutral"}):
-            print("⚠️ Unexpected labels present:", uniq)
 
+    # --------------------------
+    # 🔍 Search
+    # --------------------------
     def search(self, query: str, top_k=5):
         query_vector = self.model.encode([query])[0]
         results = self.client.search(
@@ -142,7 +169,6 @@ class Retriever:
             query_vector=query_vector,
             limit=top_k,
         )
-        # Canonicalize any stray labels at read time as well (belt & suspenders)
         out = []
         for r in results:
             p = dict(r.payload)
@@ -150,6 +176,9 @@ class Retriever:
             out.append(p)
         return out
 
+    # --------------------------
+    # 💬 Auto sentiment fallback
+    # --------------------------
     def auto_sentiment(self, text):
         score = TextBlob(text).sentiment.polarity
         if score > 0.1:
