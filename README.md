@@ -18,22 +18,21 @@ FinGPT-Pro helps analyze financial datasets (like the Financial PhraseBank) usin
 
 ## 🧩 Project Structure
 
-FinGPT-Pro/
-│
-├── app/
-│   ├── main.py                # Streamlit UI entry point
-│   ├── retriever.py           # Qdrant retriever logic for vector search
-│   ├── generator.py           # Gemini model integration for text generation
-│   ├── pipeline.py            # Full RAG (Retrieval-Augmented Generation) pipeline
-│   ├── config.py              # Handles environment variables and model paths
-│
-├── data/
-│   └── financial_phrasebank_50agree.csv   # Financial sentiment dataset
-│
-├── requirements.txt           # Python dependencies
-├── .env.example               # Example environment configuration
-├── README.md                  # Project documentation
-└── setup.sh                   # (Optional) Setup script for local installation
+![Project Structure](assets/project_structure.png)
+## Description
+
+app/ – Contains all core application logic and modules for the FinGPT-Pro system.
+
+data/ – Stores datasets used for model training, fine-tuning, or testing.
+
+requirements.txt – Lists all dependencies needed to run the project.
+
+.env.example – Template file for environment variables (e.g., API keys, endpoints).
+
+README.md – This documentation file explaining setup, usage, and structure.
+
+setup.sh – Optional helper script to automate environment setup.
+
 ------------------------
 ## Installation (Local)
 1. Clone the repository
