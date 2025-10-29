@@ -77,21 +77,21 @@ setup.sh – Optional helper script to automate environment setup.
 
 1. Make sure Qdrant is running
 
-If you don’t already have Qdrant running locally, start it via Docker:
-
-docker run -p 6333:6333 qdrant/qdrant
-
-
-This launches Qdrant at http://localhost:6333
+        If you don’t already have Qdrant running locally, start it via Docker:
+        
+        docker run -p 6333:6333 qdrant/qdrant
+        
+        
+        This launches Qdrant at http://localhost:6333
 
 2. Launch FinGPT-Pro
 
-Once Qdrant is running, start the Streamlit app:
-
-streamlit run app/main.py
+        Once Qdrant is running, start the Streamlit app:
+        
+        streamlit run app/main.py
 
 3. Open in your browser
 
-After a few seconds, the app will be available at:
-
-http://localhost:8501
+        After a few seconds, the app will be available at:
+        
+        http://localhost:8501
