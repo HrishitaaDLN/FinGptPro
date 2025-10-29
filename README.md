@@ -106,7 +106,7 @@ setup.sh – Optional helper script to automate environment setup.
 
 ----------------------------------------------------
 
-#Tech Stack Summary:
+## Tech Stack Summary:
 
 Use a badge section at the top of your README like:
 
