@@ -34,7 +34,9 @@ setup.sh – Optional helper script to automate environment setup.
 
 ## Installation (Local)
 1. Clone the repository
+
 git clone https://github.com/YourUsername/FinGPT-Pro.git
+
 cd FinGPT-Pro
 
 2. Create a virtual environment
