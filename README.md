@@ -58,17 +58,17 @@ setup.sh – Optional helper script to automate environment setup.
 
 5. Set up environment variables
 
-Create a .env file in the root folder with the following contents:
-
-GOOGLE_API_KEY=your_google_api_key_here
-
-QDRANT_HOST=localhost
-
-QDRANT_PORT=6333
-
-COLLECTION_NAME=finrag_docs
-
-DATA_PATH=data/financial_phrasebank_50agree.csv
+    Create a .env file in the root folder with the following contents:
+    
+    GOOGLE_API_KEY=your_google_api_key_here
+    
+    QDRANT_HOST=localhost
+    
+    QDRANT_PORT=6333
+    
+    COLLECTION_NAME=finrag_docs
+    
+    DATA_PATH=data/financial_phrasebank_50agree.csv
 
 ---------------
 
