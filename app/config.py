@@ -26,3 +26,8 @@ DATA_PATH = get_secret("DATA_PATH", "data/financial_phrasebank_50agree.csv")
 # -----------------------------
 EMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 DEVICE = "cpu"
+
+# -----------------------------
+#  LLM Model Setting
+# -----------------------------
+LLM_MODEL = get_secret("LLM_MODEL", "gemini-2.5-flash")
