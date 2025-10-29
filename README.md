@@ -1,4 +1,4 @@
-# 💼 FinGPT-Pro — Financial RAG Assistant
+# FinGPT-Pro — Financial RAG Assistant
 
 > A local-first financial analyst powered by **Retrieval-Augmented Generation (RAG)** using **Gemini 2.5** and **Qdrant VectorDB**.
 
@@ -6,13 +6,13 @@ FinGPT-Pro helps analyze financial datasets (like the Financial PhraseBank) usin
 
 ---
 
-## 🌟 Features
+##  Features
 
-- 🔍 **Retrieval-Augmented Generation (RAG)** — Combines local vector search with Gemini-based reasoning  
-- 🧠 **Financial Sentiment Analysis** — Understands tone from real-world corporate reports  
-- 📊 **Interactive Dashboard** — View sentiment breakdown with beautiful visualizations  
-- ⚡ **Fast Local Embedding Search** using **Sentence-Transformers + Qdrant**  
-- 🧾 **Supports CSV or Text Datasets** (Financial PhraseBank included)
+- **Retrieval-Augmented Generation (RAG)** — Combines local vector search with Gemini-based reasoning  
+-  **Financial Sentiment Analysis** — Understands tone from real-world corporate reports  
+-  **Interactive Dashboard** — View sentiment breakdown with beautiful visualizations  
+-  **Fast Local Embedding Search** using **Sentence-Transformers + Qdrant**  
+-  **Supports CSV or Text Datasets** (Financial PhraseBank included)
 
 ---
 
@@ -21,20 +21,20 @@ FinGPT-Pro helps analyze financial datasets (like the Financial PhraseBank) usin
 FinGPT-Pro/
 │
 ├── app/
-│ ├── main.py # Streamlit UI
-│ ├── retriever.py # Qdrant retriever logic
-│ ├── generator.py # Gemini model integration
-│ ├── pipeline.py # Full RAG pipeline
-│ ├── config.py # Environment variables & model paths
+│   ├── main.py                # Streamlit UI entry point
+│   ├── retriever.py           # Qdrant retriever logic for vector search
+│   ├── generator.py           # Gemini model integration for text generation
+│   ├── pipeline.py            # Full RAG (Retrieval-Augmented Generation) pipeline
+│   ├── config.py              # Handles environment variables and model paths
 │
 ├── data/
-│ └── financial_phrasebank_50agree.csv
+│   └── financial_phrasebank_50agree.csv   # Financial sentiment dataset
 │
-├── requirements.txt
-├── .env.example
-├── README.md
-└── setup.sh (optional for local setup)
-
+├── requirements.txt           # Python dependencies
+├── .env.example               # Example environment configuration
+├── README.md                  # Project documentation
+└── setup.sh                   # (Optional) Setup script for local installation
+------------------------
 ## Installation (Local)
 1. Clone the repository
 git clone https://github.com/YourUsername/FinGPT-Pro.git
@@ -61,8 +61,9 @@ QDRANT_HOST=localhost
 QDRANT_PORT=6333
 COLLECTION_NAME=finrag_docs
 DATA_PATH=data/financial_phrasebank_50agree.csv
-
+---------------
 ## Run locally
+
 1. Make sure Qdrant is running
 
 If you don’t already have Qdrant running locally, start it via Docker:
