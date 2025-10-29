@@ -56,6 +56,11 @@ st.markdown("""
 # -------------------------------
 st.markdown("<h1 class='main-title'>FinGPT-Pro</h1>", unsafe_allow_html=True)
 st.markdown("<p class='subheader'>Your Fast Local Financial Analyst powered by Retrieval-Augmented Generation (RAG)</p>", unsafe_allow_html=True)
+st.markdown("<p class='subheader'>Ask questions like:</p>", unsafe_allow_html=True)
+st.markdown("<p class='The company’s quarterly earnings exceeded expectations, and investors are optimistic about future growth.</p>", unsafe_allow_html=True)
+st.markdown("<p class='Rising inflation and declining consumer confidence have led to a drop in market performance this week</p>", unsafe_allow_html=True)
+st.markdown("<p class='Although revenue increased this quarter, growing operational costs and layoffs remain a major concern.</p>", unsafe_allow_html=True)
+
 st.divider()
 
 # -------------------------------
