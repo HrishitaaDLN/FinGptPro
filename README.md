@@ -95,3 +95,23 @@ setup.sh – Optional helper script to automate environment setup.
         After a few seconds, the app will be available at:
         
         http://localhost:8501
+   -------------------------------------
+
+   ### Example Queries & Outputs
+
+| Query | Predicted Sentiment | Confidence | Context Example |
+|-------|----------------------|-------------|-----------------|
+| "Company reports strong quarterly profits" | Positive | 0.92 | "Operating profit grew by 20%" |
+| "Layoffs announced across all divisions" | Negative | 0.88 | "Company contracted ranks of staff" |
+
+----------------------------------------------------
+
+#Tech Stack Summary:
+
+Use a badge section at the top of your README like:
+
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![Streamlit](https://img.shields.io/badge/Frontend-Streamlit-orange)
+![Qdrant](https://img.shields.io/badge/Database-Qdrant-green)
+![Gemini](https://img.shields.io/badge/LLM-Gemini%20Pro-yellow)
+![NLP](https://img.shields.io/badge/Embedding-SentenceTransformer-lightgrey)
