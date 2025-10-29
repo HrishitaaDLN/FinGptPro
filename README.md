@@ -35,40 +35,41 @@ setup.sh – Optional helper script to automate environment setup.
 ## Installation (Local)
 1. Clone the repository
 
-    git clone https://github.com/YourUsername/FinGPT-Pro.git
-
-    cd FinGPT-Pro
+        git clone https://github.com/YourUsername/FinGPT-Pro.git
+    
+        cd FinGPT-Pro
 
 2. Create a virtual environment
-    Windows:
    
-    python -m venv venv
-   
-    venv\Scripts\activate
-    
-    Mac/Linux:
-   
-    python3 -m venv venv
-   
-    source venv/bin/activate
+        Windows:
+       
+        python -m venv venv
+       
+        venv\Scripts\activate
+        
+        Mac/Linux:
+       
+        python3 -m venv venv
+       
+        source venv/bin/activate
 
-4. Install dependencies
+3. Install dependencies
 
-    pip install -r requirements.txt
+        pip install -r requirements.txt
 
-5. Set up environment variables
+4. Set up environment variables
 
-    Create a .env file in the root folder with the following contents:
-    
-    GOOGLE_API_KEY=your_google_api_key_here
-    
-    QDRANT_HOST=localhost
-    
-    QDRANT_PORT=6333
-    
-    COLLECTION_NAME=finrag_docs
-    
-    DATA_PATH=data/financial_phrasebank_50agree.csv
+        Create a .env file in the root folder with the following contents:
+        
+        GOOGLE_API_KEY=your_google_api_key_here
+        
+        QDRANT_HOST=localhost
+        
+        QDRANT_PORT=6333
+        
+        COLLECTION_NAME=finrag_docs
+        
+        DATA_PATH=data/financial_phrasebank_50agree.csv
 
 ---------------
 
