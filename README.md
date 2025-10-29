@@ -60,6 +60,7 @@ QDRANT_HOST=localhost
 QDRANT_PORT=6333
 COLLECTION_NAME=finrag_docs
 DATA_PATH=data/financial_phrasebank_50agree.csv
+
 ---------------
 ## Run locally
 
