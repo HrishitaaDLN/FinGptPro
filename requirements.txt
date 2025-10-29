@@ -1,12 +1,8 @@
 streamlit
-fastapi
-uvicorn
 pandas
-numpy
+matplotlib
 qdrant-client
 sentence-transformers
-transformers
-torch
-scikit-learn
+google-generativeai
+textblob
 python-dotenv
-pytest
