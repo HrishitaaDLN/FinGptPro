@@ -4,6 +4,7 @@
 
 FinGPT-Pro helps analyze financial datasets (like the Financial PhraseBank) using semantic search and large-language-model reasoning to summarize **positive**, **negative**, and **neutral** sentiments from contextually relevant statements.
 
+> You can view the app here: https://fingptpro-ldhar.streamlit.app/
 ---
 
 ##  Features
