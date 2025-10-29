@@ -16,10 +16,7 @@ FinGPT-Pro helps analyze financial datasets (like the Financial PhraseBank) usin
 
 ---
 
-## 🧩 Project Structure
-
-![Project Structure](assets/project_structure.png)
-## Description
+##  Project Structure Description
 
 app/ – Contains all core application logic and modules for the FinGPT-Pro system.
 
@@ -34,6 +31,7 @@ README.md – This documentation file explaining setup, usage, and structure.
 setup.sh – Optional helper script to automate environment setup.
 
 ------------------------
+
 ## Installation (Local)
 1. Clone the repository
 git clone https://github.com/YourUsername/FinGPT-Pro.git
@@ -62,6 +60,7 @@ COLLECTION_NAME=finrag_docs
 DATA_PATH=data/financial_phrasebank_50agree.csv
 
 ---------------
+
 ## Run locally
 
 1. Make sure Qdrant is running
