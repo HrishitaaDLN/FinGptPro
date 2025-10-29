@@ -1,0 +1,12 @@
+streamlit
+fastapi
+uvicorn
+pandas
+numpy
+qdrant-client
+sentence-transformers
+transformers
+torch
+scikit-learn
+python-dotenv
+pytest
