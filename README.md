@@ -10,7 +10,6 @@ FinGPT-Pro helps analyze financial datasets (like the Financial PhraseBank) usin
 
 - **Retrieval-Augmented Generation (RAG)** — Combines local vector search with Gemini-based reasoning  
 -  **Financial Sentiment Analysis** — Understands tone from real-world corporate reports  
--  **Interactive Dashboard** — View sentiment breakdown with beautiful visualizations  
 -  **Fast Local Embedding Search** using **Sentence-Transformers + Qdrant**  
 -  **Supports CSV or Text Datasets** (Financial PhraseBank included)
 
